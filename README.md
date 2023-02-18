@@ -9,3 +9,5 @@
 **Scripts**
 * #### The *seqClass.py* script allows to identify whether a sequence (-s) introduced by the user is DNA or RNA. It also identifies whether a specific motif (-m) introduced by the user is found within the sequence.
 
+* #### The *seq_nt_proportion.py* script calculates the proportion of nucleotides in a DNA or RNA sequence (-s) introduced by the user. This script will be edited as a collaborative process with another student.
+
