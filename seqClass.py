@@ -18,6 +18,7 @@ args = parser.parse_args()
 args.seq = args.seq.upper() 
 if re.search('^[ACGTU]+$', args.seq):
     if re.search('T', args.seq):
+# The 'if not' is adding to avoig classifying a sequence that contains T and U as DNA
         if not re.search('U', args.seq):
             print ('The sequence is DNA')
     elif re.search('U', args.seq):
