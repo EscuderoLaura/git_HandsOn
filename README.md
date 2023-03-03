@@ -4,7 +4,9 @@
 
 
 **Branches**
-* #### It contains the following branches: main (master), fix and practical (a collaborative project with another student)
+* #### It contains the following branches: main (master), fix and practical (a collaborative project with another student).
+
+* #### It contains the branch: docker that contains the Dockerfile to buil a Docker image for the seqClass.py script.
 
 **Scripts**
 * #### The *seqClass.py* script allows to identify whether a sequence (-s) introduced by the user is DNA or RNA. It also identifies whether a specific motif (-m) introduced by the user is found within the sequence.
