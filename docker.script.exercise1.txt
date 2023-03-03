@@ -1,0 +1,139 @@
+# Exercise1
+# Laura Escudero - MSc Omics data analysis UVIC-UCC
+
+# This file contains the scripts used to create the Docker image for the seqClass.py script, run the 
+# script and upload it to DockerHub. ALso information showing that this was done.
+
+
+# go to the git_Handson directory
+ 
+#lauraescudero@Lauras-MacBook-Pro Terminal % 
+cd ../git_HandsOn
+#lauraescudero@Lauras-MacBook-Pro git_HandsOn % 
+ls
+#README.md		seqClass.py
+#git_log_20230218LE.text	seq_nt_proportion.py
+
+python3 seqClass.py -s ACGTGG
+#The sequence is DNA
+
+git branch docker
+git branch       
+
+#  docker
+#  fix
+#* main
+#  practical
+#  practical_collaboration
+
+git checkout docker
+#Switched to branch 'docker'
+git branch         
+#* docker
+#  fix
+#  main
+#  practical
+#  practical_collaboration
+
+# check that the script works
+
+python3 seqClass.py -s ATTTTGGGTC
+#The sequence is DNA
+python3 seqClass.py -s uuugagagaccca
+#The sequence is RNA
+python3 seqClass.py -s uuugagattttt 
+#Please check the sequence, it contains both T and U
+
+
+# create Dockerfile
+nano Dockerfile
+
+# Add these information in the Docker file ===================================
+
+# Start from debian linux image (DockerHub)
+FROM debian:stable
+
+# Add custom label
+LABEL maintainer "Laura Escudero <laura.escudero@uvic.cat>" \
+      version "0.1" \
+      description "Docker image for running seqClass.py - Hands on practical"
+
+# Install Python (after apt-get update)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+         python-is-python3
+
+# Make the folder '/scripts' in the container
+RUN mkdir /scripts
+
+# Copy 'seqClass.py' to the folder '/scripts' in the container
+ADD seqClass.py /scripts
+
+#============================================================================
+
+
+
+
+# Create the image
+docker build -t escuderolaura/image2_seqclass.py .
+
+#Run Docker container (not interactive way)
+docker run escuderolaura/image2_seqclass.py python3 scripts/seqClass.py -s ATTTGGTGAC
+#The sequence is DNA
+
+
+#Login to DockerHub to upload the image
+docker login
+docker tag escuderolaura/image2_seqclass.py escuderolaura/image2_practicalexercise_seqclass
+
+#Upload the renamed image
+docker push escuderolaura/image2_practicalexercise_seqclass
+
+#Using default tag: latest
+#The push refers to repository [docker.io/escuderolaura/image2_practicalexercise_seqclass]
+#b53b5f36c7a9: Pushed 
+#af73bbb269bb: Pushed 
+#03408c354d11: Pushed 
+#19bcd603b4d3: Mounted from escuderolaura/image1 
+#latest: digest: sha256:adf1b066068c1b0f3c9711486a4de6f788cb3970849227a0a31918df3592df83 size: 1155
+
+
+#Now also commit the changes to GitHub
+git status
+
+#On branch docker
+#Untracked files:
+#  (use "git add <file>..." to include in what will be committed)
+	Dockerfile
+#nothing added to commit but untracked files present (use "git add" to track)
+
+
+git add Dockerfile 
+git commit -m "Practical Exercise 1: Docker image for the seqClass.py script. Added the Docker file"
+
+#[docker e7f0716] Practical Exercise 1: Docker image for the seqClass.py script. Added the Docker 
+#file
+# 1 file changed, 17 insertions(+)
+# create mode 100644 Dockerfile
+
+
+
+# Push the changes into my GitHub repository, branch docker
+git push -u origin docker
+
+#Enumerating objects: 4, done.
+#Counting objects: 100% (4/4), done.
+#Delta compression using up to 12 threads
+#Compressing objects: 100% (3/3), done.
+#Writing objects: 100% (3/3), 629 bytes | 629.00 KiB/s, done.
+#Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+#remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+#remote: 
+#remote: Create a pull request for 'docker' on GitHub by visiting:
+#remote:      https://github.com/EscuderoLaura/git_HandsOn/pull/new/docker
+#remote: 
+#To https://github.com/EscuderoLaura/git_HandsOn
+# * [new branch]      docker -> docker
+#branch 'docker' set up to track 'origin/docker'.
+ 
+
+
